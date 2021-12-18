@@ -1,38 +1,68 @@
-.App {
-  text-align: center;
+.card {
+  background-color: lightblue;
+  margin-left: 400px;
+  width: 700px;
+  margin-top: 50px;
+  padding-bottom: 50px;
+}
+.card-body {
+  background-color: lightgrey;
+}
+form > input {
+  width: 500px;
+  margin-left: 50px;
+  margin-top: 100px;
+  height: 50px;
+}
+form > button {
+  height: 47px;
+  width: 90px;
+}
+h3 {
+  margin-left: 50px;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+.todo-list {
+  margin-left: 40px;
+}
+.checkbox {
+  height: 50px;
+  width: 50px;
+  margin-left: 400px;
+}
+.todo-actions {
+  margin-left: 50px;
+}
+.button {
+  height: 50px;
+  width: 50px;
+  margin-top: -1px;
+}
+table,
+tr {
+  background-color: lightblue;
+  border: 1px solid black;
+  margin: 8px;
+}
+.actions {
+  margin-left: 450px;
+  margin-top: -56px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.inside {
+  height: 50px;
+  background-color: white;
+  margin-bottom: -50px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.inside > input {
+  width: 540px;
+  height: 50px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.text {
+  padding-top: 10px;
+  font-size: 30px;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input:focus {
+  background-color: lightpink;
 }
