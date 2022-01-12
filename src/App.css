@@ -1,68 +1,24 @@
-.card {
-  background-color: lightblue;
-  margin-left: 400px;
-  width: 700px;
-  margin-top: 50px;
-  padding-bottom: 50px;
+ul {
+  list-style: none;
+  display: flex;
+  margin-bottom: 10%;
 }
-.card-body {
-  background-color: lightgrey;
-}
-form > input {
-  width: 500px;
-  margin-left: 50px;
-  margin-top: 100px;
-  height: 50px;
-}
-form > button {
-  height: 47px;
-  width: 90px;
-}
-h3 {
-  margin-left: 50px;
-  margin-top: 50px;
-  margin-bottom: 30px;
-}
-.todo-list {
-  margin-left: 40px;
-}
-.checkbox {
-  height: 50px;
-  width: 50px;
-  margin-left: 400px;
-}
-.todo-actions {
-  margin-left: 50px;
-}
-.button {
-  height: 50px;
-  width: 50px;
-  margin-top: -1px;
+li {
+  padding: 10px;
 }
 table,
+td,
 tr {
-  background-color: lightblue;
-  border: 1px solid black;
-  margin: 8px;
+  border: 1px, solid, black;
 }
-.actions {
-  margin-left: 450px;
-  margin-top: -56px;
+td {
+  width: 300px;
 }
 
-.inside {
-  height: 50px;
-  background-color: white;
-  margin-bottom: -50px;
-}
-.inside > input {
-  width: 540px;
-  height: 50px;
-}
-.text {
-  padding-top: 10px;
-  font-size: 30px;
-}
-input:focus {
-  background-color: lightpink;
+.viewcardcss {
+  background-color: #05a786;
+  box-shadow: 4px 5px 4px 0px #7ff4c7;
+  width: 500px;
+  border: 1px solid #20ffb5;
+  color: white;
 }

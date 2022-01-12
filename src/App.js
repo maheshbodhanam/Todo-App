@@ -1,151 +1,117 @@
-import React from "react";
-import "./App.css";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
+import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import Layout from "./Todos/Layout";
+import Home from "./Todos/Home";
+import AllTodos from "./Todos/AllTodos";
+import NewTodo from "./Todos/NewTodo";
+import Todo from "./Todos/Todo";
+import ViewTodo from "./components/ViewTodo";
+
+import "./App.css";
 
 const App = () => {
-  const [todos, setTodos] = React.useState([]);
-  const [todo, setTodo] = React.useState("");
-  const [todoEditing, setTodoEditing] = React.useState(null);
-  const [editingText, setEditingText] = React.useState("");
+  const [todos, setTodos] = useState([]);
+  const [addTodo, setAddTodo] = useState("");
+  const [editTodo, setEditTodo] = useState("");
+  const [todoEditing, setTodoEditing] = useState(null);
 
+  const handleChangeForAddTodo = (event) => {
+    setAddTodo(event.target.value);
+  };
 
-  const emailInputRef = React.useRef(null);
+  const handleEDitChangeForTodo = (event) => {
+    setEditTodo(event.target.value);
+    console.log(event.target.value);
+  };
 
-  React.useEffect(()=>{
-    emailInputRef.current.focus();
-  }, []);
+  const handleSubmitForAddTodo = () => {
+    const newTodos = [...todos, addTodo];
+    setTodos(newTodos);
 
-  React.useEffect(() => {
-    const json = localStorage.getItem("todos");
-    const loadedTodos = JSON.parse(json);
-    if (loadedTodos) {
-      setTodos(loadedTodos);
-    }
-  }, []);
+    setAddTodo("");
+  };
 
+  const handleEditSubmitForTodo = (event) => {
+    const editedTodo = editTodo;
+    const newTodo = [...todos];
 
+    const index = todos.findIndex((todo) => todo === todoEditing);
 
+    newTodo[index] = editedTodo;
 
-  React.useEffect(() => {
-    const json = JSON.stringify(todos);
-    localStorage.setItem("todos", json);
-  }, [todos]);
-
- 
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    const newTodo = {
-      id: new Date().getTime(),
-      text: todo,
-      completed: false,
-    };
-    setTodos([...todos].concat(newTodo));
-    setTodo("");
-  }
-
-  function deleteTodo(id) {
-    let updatedTodos = [...todos].filter((todo) => todo.id !== id);
-    setTodos(updatedTodos);
-  }
-
-  function toggleComplete(id) {
-    let updatedTodos = [...todos].map((todo) => {
-      if (todo.id === id) {
-        todo.completed = !todo.completed;
-      }
-      return todo;
-    });
-    setTodos(updatedTodos);
-  }
-
-  function submitEdits(id) {
-    const updatedTodos = [...todos].map((todo) => {
-      if (todo.id === id) {
-        todo.text = editingText;
-      }
-      return todo;
-    });
-    setTodos(updatedTodos);
+    setTodos(newTodo);
     setTodoEditing(null);
-  }
+  };
+
+  const handleEditClick = (event, todo) => {
+    setTodoEditing(todo);
+    setEditTodo(todo);
+    console.log(todo);
+  };
+
+  const handleCancelClick = () => {
+    setTodoEditing(null);
+  };
+
+  const handleDeleteClick = (_todo) => {
+    const newTodos = todos.filter((todo) => todo !== _todo);
+    console.log(newTodos);
+    setTodos(newTodos);
+  };
 
   return (
-    <div className="card">
-        
-      
-      <form onSubmit={handleSubmit}>
-        <input ref={emailInputRef}
-          type="text"
-          onChange={(e) => setTodo(e.target.value)}
-          value={todo}
-        />&nbsp;&nbsp;
-        <button type="submit">submit</button>
-      </form>
-      <h3>Todo List</h3>
-
-     
-      <div className="todo-actions">
-          
-         <div> 
-        
-
-              {todos.map((todo) => (
-        <div key={todo.id} className="todo">
-          <div className="todo-text">
-          <table>
-            <tr >
-              <div className="inside">
-              {todo.id === todoEditing ? (
-              <input ref={emailInputRef}
-                type="text"
-                onChange={(e) => setEditingText(e.target.value)}
+    <div>
+      <div>
+        <center>
+          <BrowserRouter>
+            <Layout />
+            <Routes>
+              <Route
+                path="Home"
+                element={
+                  <Home
+                    todo={todos}
+                    handleDeleteClick={handleDeleteClick}
+                    handleEditClick={handleEditClick}
+                  />
+                }
               />
-            ) : (
-             <div className="text"> {todo.text} </div>
-              
-            )}
-            </div>
-          
-          
-          <div className="todo-actions">
-          <input className="checkbox"
-              type="checkbox"
-              id="completed"
-              checked={todo.completed}
-              onChange={() => toggleComplete(todo.id)}
-            />
-          <div className="actions">
-            {todo.id === todoEditing ? (
-              <button className="button" onClick={() => submitEdits(todo.id)}><DoneOutlinedIcon/></button>
-            ) : (
-              <button className="button" onClick={() => setTodoEditing(todo.id)}><EditOutlinedIcon /></button>
-            )}
 
-            <button className="button" onClick={() => deleteTodo(todo.id)}><DeleteIcon/></button>
-            </div>
-          </div>
-          
-          </tr>
+              <Route path="AllTodos" element={<AllTodos todos={todos} />} />
 
-</table>
+              <Route
+                path="NewTodo"
+                element={
+                  <NewTodo
+                    addTodo={addTodo}
+                    handleChangeForAddTodo={handleChangeForAddTodo}
+                    handleSubmitForAddTodo={handleSubmitForAddTodo}
+                  />
+                }
+              />
+              <Route
+                path="Todo"
+                element={
+                  <Todo
+                    todos={todos}
+                    todoEditing={todoEditing}
+                    editTodo={editTodo}
+                    handleEDitChangeForTodo={handleEDitChangeForTodo}
+                    handleEditSubmitForTodo={handleEditSubmitForTodo}
+                    handleCancelClick={handleCancelClick}
+                    handleDeleteClick={handleDeleteClick}
+                    handleEditClick={handleEditClick}
+                  />
+                }
+              />
 
-          </div>
-          </div>
-                ))}
-
-         
-        </div>
-
-      
+              <Route exact path="/:id" element={<ViewTodo />} />
+            </Routes>
+          </BrowserRouter>
+        </center>
       </div>
-     
-      </div>
-  
+    </div>
   );
 };
 
